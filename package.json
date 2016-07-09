@@ -1,0 +1,38 @@
+{
+  "name": "fepack",
+  "version": "1.0.0",
+  "description": "fepack",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slogeor/fepack.git"
+  },
+  "author": "slogeor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/slogeor/fepack/issues"
+  },
+  "homepage": "https://github.com/slogeor/fepack#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean": "^0.3.2",
+    "gulp-connect": "^4.1.0",
+    "gulp-file-include": "^0.13.7",
+    "gulp-if": "^2.0.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-minify-html": "^1.0.6",
+    "gulp-open": "^2.0.0",
+    "gulp-rev": "^7.1.0",
+    "gulp-rev-collector": "^1.0.4",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^1.5.4",
+    "gulp-util": "^3.0.7",
+    "os": "^0.1.1",
+    "path": "^0.12.7",
+    "run-sequence": "^1.2.2",
+    "webpack": "^1.13.1"
+  }
+}
