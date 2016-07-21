@@ -121,6 +121,7 @@ gulp.task('html', function(done) {
  * sass和css在同一个目录下
  */
 gulp.task('sass', function(done) {
+    var devCssPath = path.join(devPath, '/pages');
     return gulp.src(sassFile)
         .pipe(sass().on('error', sass.logError))
         //自动补全
@@ -130,7 +131,7 @@ gulp.task('sass', function(done) {
             remove: false
         }))
         // css文件
-        .pipe(gulp.dest(devPath));
+        .pipe(gulp.dest(devCssPath));
 });
 
 /**
@@ -152,7 +153,7 @@ gulp.task("buildjs", function(callback) {
  * copy css file
  * prd 环境生成版本号
  */
-gulp.task('mincss', ['sass'], function(done) {
+gulp.task('mincss', ['sass'] ,function(done) {
     var cssDestPath = path.join(buildPath, '/pages');
 
     return gulp.src(cssFile)
