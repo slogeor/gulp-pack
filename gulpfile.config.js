@@ -34,5 +34,6 @@ module.exports = {
         dev: './src/',
         build: './build/',
         pages: './src/pages',
+        version: './src/pages/version/',
     }
 };

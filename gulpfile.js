@@ -48,12 +48,16 @@ var devCompiler = webpack(devConfig);
 var gulpConfig = require('./gulpfile.config.js');
 var pathCfg = gulpConfig.pathCfg;
 var host = gulpConfig.host;
+
 var buildPath = pathCfg.build;
 var devPath  = pathCfg.dev;
 var pagesPath = pathCfg.pages;
-var sassFile = path.join(devPath, '/**/*.scss');
-var htmlFile = path.join(devPath, '/**/*.tpl');
-var jsFile = path.join(devPath, '/**/*/index.js');
+var versionPath = pathCfg.version;
+
+var sassFile = path.join(pagesPath, '/**/*.scss');
+var cssFile = path.join(pagesPath, '/**/*.css');
+var htmlFile = path.join(pagesPath, '/**/*.tpl');
+var jsFile = path.join(pagesPath, '/**/*/index.js');
 /**
  * @description 选择打开浏览器
  * mac chrome: "Google chrome",
@@ -96,6 +100,23 @@ gulp.task('clean', function(done) {
 });
 
 /**
+ * @description 替换src下子模板 *.tpl，生成的html页面放在当前目录下
+ * 用于模版的include
+ */
+gulp.task('html', function(done) {
+    return gulp.src([htmlFile])
+        .pipe(fileInclude({
+            prefix: '@@',
+            basepath: path.join(pagesPath)
+        }))
+        .pipe(rename({
+            extname: ".html"
+        }))
+        .pipe(gulp.dest(devPath))
+        .pipe(connect.reload());
+});
+
+/**
  * @description 编译sass，自动补前缀
  * sass和css在同一个目录下
  */
@@ -126,20 +147,27 @@ gulp.task("buildjs", function(callback) {
 });
 
 /**
- * @description 替换src下子模板 *.tpl，生成的html页面放在当前目录下
- * 用于模版的include
+ * 依赖 sass
+ * 压缩 css
+ * copy css file
+ * prd 环境生成版本号
  */
-gulp.task('html', function(done) {
-    return gulp.src([htmlFile])
-        .pipe(fileInclude({
-            prefix: '@@',
-            basepath: path.join(pagesPath)
+gulp.task('mincss', ['sass'], function(done) {
+    var cssDestPath = path.join(buildPath, '/pages');
+
+    return gulp.src(cssFile)
+        //压缩
+        .pipe(minifyCss({
+            compatibility: 'ie7'
         }))
-        .pipe(rename({
-            extname: ".html"
-        }))
-        .pipe(gulp.dest(devPath))
-        .pipe(connect.reload());
+        // 版本号
+        // .pipe(gulpif(config.env, rev()))
+        .pipe(rev())
+        .pipe(gulp.dest(cssDestPath))
+        // 版本号map
+        // .pipe(gulpif(config.env, rev.manifest()))
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(versionPath));
 });
 
 /**
@@ -153,47 +181,8 @@ gulp.task('watch', function(done) {
 
 //=====================================================================
 
-/**
- * 依赖 sass
- * 压缩 css
- * copy css file
- * prd 环境生成版本号
- */
-gulp.task('mincss', ['sass'], function(done) {
-    var cssDevFile = path.join(pathCfg.devPath, pathCfg.cssFile);
-    var cssDestPath = path.join(pathCfg.prdPath, pathCfg.cssPath);
-    var cssVerPath = cssDestPath;
-    console.log('mincss task......');
-    return gulp.src(cssDevFile)
-        //压缩
-        .pipe(minifyCss({
-            compatibility: 'ie7'
-        }))
-        // 版本号
-        .pipe(gulpif(config.env, rev()))
-        .pipe(gulp.dest(cssDestPath))
-        // 版本号map
-        .pipe(gulpif(config.env, rev.manifest()))
-        .pipe(gulp.dest(cssVerPath))
-        .pipe(connect.reload());
-});
 
-/**
- * 压缩混淆JS
- */
-gulp.task('minjs', ['buildjs'], function() {
-    var jsPageFile = path.join(pathCfg.prdPath, pathCfg.jsPageFile);
-    var jsPrdPath = path.join(pathCfg.prdPath, pathCfg.jsPagePath);
-    var jsVerPath = jsPrdPath;
-    console.log('minjs task......');
-    return gulp.src(jsPageFile)
-        .pipe(uglify())
-        .pipe(rev())
-        .pipe(gulp.dest(jsPrdPath))
-        // 版本号map
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(jsVerPath));
-});
+
 
 /**
  * 压缩 HTML
