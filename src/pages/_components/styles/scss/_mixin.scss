@@ -1,0 +1,4 @@
+@mixin g-resize($width) {
+   width: $width;
+   margin: 0 auto;
+}

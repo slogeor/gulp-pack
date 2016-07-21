@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var entryMap = require('./entry-map.js');
+var entryMap = require('./generate.entry.js');
 
 module.exports = {
     cache: true,
@@ -15,7 +15,7 @@ module.exports = {
         extensions: ['', '.js', '.json'],
         alias: {
             'pages': 'src/pages/',
-            'components': 'src/_components/'
+            'components': 'src/pages/_components/'
         }
     },
     plugins: [

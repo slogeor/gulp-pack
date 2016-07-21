@@ -4,7 +4,7 @@ module.exports = {
      *  basePath: 访问资源的主目录
      *  port: 端口号
      *  defaultPath: 默认访问的路径
-     * } 
+     * }
      */
     host: {
         location: 'http://127.0.0.1',
@@ -26,19 +26,13 @@ module.exports = {
      * 路径信息 {
      *  dev: 开发目录
      *  build: 线上目录
+     *  pages: pages目录
      * }
-     * 
+     *
      */
     pathCfg: {
         dev: './src/',
-        build: './build/'
-        // jsPagePath: 'scripts/pages/',
-        // jsPageFile: 'scripts/pages/**/*.js',
-        // viewPath: 'views/',
-        // viewPagePath: 'views/pages/',
-        // viewFile: 'views/**/*.html',
-        // viewPageFile: 'views/pages/**/*.html',
-        // cssVerFile: 'styles/**/*.json',
-        // jsVerFile: 'scripts/**/*.json'
+        build: './build/',
+        pages: './src/pages',
     }
 };

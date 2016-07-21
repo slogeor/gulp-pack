@@ -16,6 +16,7 @@
  * revCollector: 添加版本号
  * fileInclude: 引入文件
  * clean: 清除文件
+ * rename: 重命名
  * webpack: webapck插件
  * webpackConfig: webpack配置文件
  */
@@ -36,6 +37,7 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
     clean = require('gulp-clean'),
+    rename = require("gulp-rename"),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js');
 
@@ -48,11 +50,13 @@ var pathCfg = gulpConfig.pathCfg;
 var host = gulpConfig.host;
 var buildPath = pathCfg.build;
 var devPath  = pathCfg.dev;
+var pagesPath = pathCfg.pages;
 var sassFile = path.join(devPath, '/**/*.scss');
-var htmlFile = path.join(devPath, '/**/*.html');
+var htmlFile = path.join(devPath, '/**/*.tpl');
+var jsFile = path.join(devPath, '/**/*/index.js');
 /**
  * @description 选择打开浏览器
- * mac chrome: "Google chrome", 
+ * mac chrome: "Google chrome",
  */
 var browser = os.platform() === 'linux' ? 'Google chrome' : (
     os.platform() === 'darwin' ? 'Google chrome' : (
@@ -122,16 +126,19 @@ gulp.task("buildjs", function(callback) {
 });
 
 /**
- * @description 替换src下子模板，生成的html页面放在build下
+ * @description 替换src下子模板 *.tpl，生成的html页面放在当前目录下
  * 用于模版的include
  */
 gulp.task('html', function(done) {
     return gulp.src([htmlFile])
         .pipe(fileInclude({
             prefix: '@@',
-            basepath: path.join(devPath)
+            basepath: path.join(pagesPath)
         }))
-        .pipe(gulp.dest(buildPath))
+        .pipe(rename({
+            extname: ".html"
+        }))
+        .pipe(gulp.dest(devPath))
         .pipe(connect.reload());
 });
 
@@ -141,6 +148,7 @@ gulp.task('html', function(done) {
 gulp.task('watch', function(done) {
     gulp.watch(sassFile, ['sass']);
     gulp.watch(htmlFile, ['html']);
+    gulp.watch(jsFile, ['buildjs']);
 });
 
 //=====================================================================
@@ -188,7 +196,7 @@ gulp.task('minjs', ['buildjs'], function() {
 });
 
 /**
- * 压缩 HTML 
+ * 压缩 HTML
  * 引入 CSS JS 版本号
  */
 gulp.task('minhtml', function() {
@@ -206,13 +214,6 @@ gulp.task('minhtml', function() {
         }))
         .pipe(gulp.dest(viewPagePath));
 });
-
-
-
-
-
-
-
 
 
 //dev

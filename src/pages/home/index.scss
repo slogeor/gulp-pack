@@ -1,3 +1,5 @@
+@import '../_components/styles/scss/_mixin.scss';
 body {
-    font-size: 12px;
+    @include g-resize(80%);
+    text-align: center;
 }
