@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
-@@include('./_components/views/head.html')
-<title>fepack</title>
-<link rel="stylesheet" type="text/css" href="./index.css">
+<head>
+    @@include('./_components/views/head.tpl')
+    <title>fepack</title>
+</head>
+<link rel="stylesheet" type="text/css" href="/pages/home/index.css">
 <body>
-@@include('./_components/views/header.html')
-<p>this is body</p>
-@@include('./_components/views/footer.html')
-<script type="text/javascript" src="./dist/index.min.js"></script>
+    @@include('./_components/views/header.tpl')
+    <p>this is body template</p>
+    @@include('./_components/views/footer.tpl')
+    <script type="text/javascript" src="/pages/home/dist/index.min.js"></script>
 </body>
 </html>

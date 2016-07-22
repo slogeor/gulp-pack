@@ -37,30 +37,40 @@ var gulp = require('gulp'),
     rev = require('gulp-rev'),
     revCollector = require('gulp-rev-collector'),
     clean = require('gulp-clean'),
-    rename = require("gulp-rename"),
+    rename = require('gulp-rename'),
     webpack = require('webpack'),
     webpackConfig = require('./webpack.config.js');
 
 // webpack
 var devConfig = Object.create(webpackConfig);
 var devCompiler = webpack(devConfig);
+
 //gulpfile 配置信息
 var gulpConfig = require('./gulpfile.config.js');
 var pathCfg = gulpConfig.pathCfg;
 var host = gulpConfig.host;
+var config = gulpConfig.config;
 
-var buildPath = pathCfg.build;
-var devPath  = pathCfg.dev;
+var bizDir = pathCfg.bizDir;
 var pagesPath = pathCfg.pages;
 var versionPath = pathCfg.version;
+var devPath  = pathCfg.dev;
+var buildPath = pathCfg.build;
+var buildBizPath = path.join(buildPath, bizDir);
+var devBizPath = path.join(devPath, bizDir);
+var cssVerPath = path.join(versionPath, './css');
+var jsVerPath = path.join(versionPath, './js');
 
 var sassFile = path.join(pagesPath, '/**/*.scss');
 var cssFile = path.join(pagesPath, '/**/*.css');
-var htmlFile = path.join(pagesPath, '/**/*.tpl');
-var jsFile = path.join(pagesPath, '/**/*/index.js');
+var tplFile = path.join(pagesPath, '/**/*.tpl');
+var htmlFile = path.join(pagesPath, '/**/*.html');
+var buildJsFile = path.join(pagesPath, '/**/*/index.js');
+var jsFile = path.join(pagesPath, '/**/*.js');
+
 /**
  * @description 选择打开浏览器
- * mac chrome: "Google chrome",
+ * mac chrome: 'Google chrome',
  */
 var browser = os.platform() === 'linux' ? 'Google chrome' : (
     os.platform() === 'darwin' ? 'Google chrome' : (
@@ -81,9 +91,17 @@ gulp.task('open', function(done) {
 /**
  * @default connect task
  */
-gulp.task('connect', function() {
+gulp.task('connectDev', function() {
     return connect.server({
-        root: host.basePath,
+        root: host.devPath,
+        port: host.port,
+        livereload: true
+    });
+});
+
+gulp.task('connectPrd', function() {
+    return connect.server({
+        root: host.prdPath,
         port: host.port,
         livereload: true
     });
@@ -104,15 +122,15 @@ gulp.task('clean', function(done) {
  * 用于模版的include
  */
 gulp.task('html', function(done) {
-    return gulp.src([htmlFile])
+    return gulp.src([tplFile])
         .pipe(fileInclude({
             prefix: '@@',
             basepath: path.join(pagesPath)
         }))
         .pipe(rename({
-            extname: ".html"
+            extname: '.html'
         }))
-        .pipe(gulp.dest(devPath))
+        .pipe(gulp.dest(devBizPath))
         .pipe(connect.reload());
 });
 
@@ -121,7 +139,6 @@ gulp.task('html', function(done) {
  * sass和css在同一个目录下
  */
 gulp.task('sass', function(done) {
-    var devCssPath = path.join(devPath, '/pages');
     return gulp.src(sassFile)
         .pipe(sass().on('error', sass.logError))
         //自动补全
@@ -131,20 +148,26 @@ gulp.task('sass', function(done) {
             remove: false
         }))
         // css文件
-        .pipe(gulp.dest(devCssPath));
+        .pipe(gulp.dest(devBizPath))
+        .pipe(connect.reload());
 });
 
 /**
  * webpack对js编译
  */
-gulp.task("buildjs", function(callback) {
+gulp.task('buildjs', function(callback) {
     devCompiler.run(function(err, stats) {
-        if (err) throw new gutil.PluginError("webpack:buildjs", err);
-        gutil.log("[webpack:buildjs]", stats.toString({
+        if (err) throw new gutil.PluginError('webpack:buildjs', err);
+        gutil.log('[webpack:buildjs]', stats.toString({
             colors: true
         }));
         callback();
     });
+});
+
+gulp.task('js', ['buildjs'], function(done) {
+    return gulp.src(jsFile)
+        .pipe(connect.reload());
 });
 
 /**
@@ -154,8 +177,6 @@ gulp.task("buildjs", function(callback) {
  * prd 环境生成版本号
  */
 gulp.task('mincss', ['sass'] ,function(done) {
-    var cssDestPath = path.join(buildPath, '/pages');
-
     return gulp.src(cssFile)
         //压缩
         .pipe(minifyCss({
@@ -163,12 +184,45 @@ gulp.task('mincss', ['sass'] ,function(done) {
         }))
         // 版本号
         // .pipe(gulpif(config.env, rev()))
+        .pipe(gulp.dest(buildBizPath))
         .pipe(rev())
-        .pipe(gulp.dest(cssDestPath))
+        .pipe(gulp.dest(buildBizPath))
         // 版本号map
         // .pipe(gulpif(config.env, rev.manifest()))
         .pipe(rev.manifest())
-        .pipe(gulp.dest(versionPath));
+        .pipe(gulp.dest(cssVerPath));
+});
+
+/**
+ * 压缩混淆JS
+ */
+gulp.task('minjs', ['buildjs'], function() {
+    return gulp.src(jsFile)
+        .pipe(uglify())
+        .pipe(gulp.dest(buildBizPath))
+        .pipe(rev())
+        .pipe(gulp.dest(buildBizPath))
+        // 版本号map
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(jsVerPath));
+});
+
+/**
+ * 压缩 HTML
+ * 引入 CSS JS 版本号
+ */
+gulp.task('minhtml', ['html'], function() {
+    var cssVerFile = path.join(cssVerPath, './rev-manifest.json');
+    var jsVerFile = path.join(jsVerPath, './rev-manifest.json');
+
+    return gulp.src([cssVerFile, jsVerFile, htmlFile])
+        .pipe(revCollector())
+        .pipe(minifyHtml({
+            empty: true,
+            spare: true,
+            quotes: true
+        }))
+        .pipe(gulp.dest(buildBizPath));
 });
 
 /**
@@ -176,38 +230,17 @@ gulp.task('mincss', ['sass'] ,function(done) {
  */
 gulp.task('watch', function(done) {
     gulp.watch(sassFile, ['sass']);
-    gulp.watch(htmlFile, ['html']);
-    gulp.watch(jsFile, ['buildjs']);
+    gulp.watch(tplFile, ['html']);
+    gulp.watch(jsFile, ['js']);
 });
-
-//=====================================================================
-
-
-
-
-/**
- * 压缩 HTML
- * 引入 CSS JS 版本号
- */
-gulp.task('minhtml', function() {
-    var cssVerFile = path.join(pathCfg.prdPath, pathCfg.cssVerFile);
-    var jsVerFile = path.join(pathCfg.prdPath, pathCfg.jsVerFile);
-    var viewPrdFile = path.join(pathCfg.prdPath, pathCfg.viewPageFile);
-    var viewPagePath = path.join(pathCfg.prdPath, pathCfg.viewPagePath);
-    console.log('minhtml task......');
-    return gulp.src([cssVerFile, jsVerFile, viewPrdFile])
-        .pipe(revCollector())
-        .pipe(minifyHtml({
-            empty: true,
-            spare: true,
-            quotes: true
-        }))
-        .pipe(gulp.dest(viewPagePath));
-});
-
 
 //dev
 gulp.task('default', function(callback) {
-    runSequence('html', 'sass', 'buildjs', ['connect', 'open', 'watch'],
+    runSequence('html', 'sass', 'buildjs', ['connectDev', 'open', 'watch'],
+        callback);
+});
+
+gulp.task('public', function(callback) {
+    runSequence('clean', 'mincss', 'minjs', 'minhtml', ['connectPrd', 'open'],
         callback);
 });
