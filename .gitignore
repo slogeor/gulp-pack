@@ -5,7 +5,6 @@ npm-debug.log
 *.swp
 .sw*
 .idea/*
-.editorconfig
 .jshintrc
 .travis.yml
 .sass-cache/

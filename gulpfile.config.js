@@ -1,39 +1,24 @@
 module.exports = {
-    /**
-     *  basePath: 访问资源的主目录
-     *  port: 端口号
-     *  defaultPath: 默认访问的路径
-     */
+    common: {
+        // 开发路径
+        srcPath: './src',
+        // 线上路径
+        buildPath: './build',
+        bizPath: './src/mods/scripts/biz',
+        pages: './src/pages',
+        version: './src/version/'
+    },
+
     host: {
+        // 访问地址
         location: 'http://127.0.0.1',
-        devPath: 'src',
-        prdPath: 'build',
+        // 端口号
         port: 9000,
+        // 默认访问的路径
         defaultPath: 'pages/home/'
     },
 
-    /**
-     *  dev: 开发目录
-     *  build: 线上目录
-     *  bizDir: 业务主目录
-     *  pages: pages目录
-     */
-    pathCfg: {
-        dev: './src/',
-        build: './build/',
-        bizDir: './pages',
-        pages: './src/pages',
-        version: './src/pages/version/',
-    },
+    evn: {
 
-     /**
-     *  env: 环境标识 {
-     *    dev: 开发
-     *    test: 测试
-     *    prd: 线上
-     *  }
-     */
-    config: {
-        env: 'dev'
     }
 };
