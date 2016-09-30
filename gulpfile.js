@@ -1,18 +1,21 @@
+var fs = require('fs');
 var gulp = require('gulp');
-var requireDir = require('require-dir');
-var tasks = requireDir('./gulp');
+var path = require('path');
+var runSequence = require('run-sequence');
+var gulpLoadPlugins = require('gulp-load-plugins');
+var plugins = gulpLoadPlugins();
 
-for (var task in tasks) {
-    if (tasks.hasOwnProperty(task)) {
-        gulp.task(task, tasks[task]['deps'] || [], (function (gulp, tasks, task) {
-            tasks[task]['task'](gulp);
-            // return function () {
-                // return tasks[task]['task'](gulp);
-            // };
-        })(gulp, tasks, task));
+var gulpConfig = require('./gulpfile.config.js');
+var gulpTaskList = fs.readdirSync(path.join('./gulp/'));
+
+gulpTaskList.forEach(function (taskfile) {
+    var suffix = taskfile.split('.').pop();
+    if (suffix === 'js') { // 过滤其它文件
+        require('./gulp/' + taskfile)(gulp, gulpConfig, plugins);
     }
-}
+});
 
-gulp.task('default', function () {
-    gulp.run('server');
+
+gulp.task('default', function(callback) {
+    runSequence('open', 'connect', callback);
 });

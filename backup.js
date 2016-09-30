@@ -72,85 +72,85 @@ var jsFile = path.join(pagesPath, '/**/*.js');
  * @description 选择打开浏览器
  * mac chrome: 'Google chrome',
  */
-var browser = os.platform() === 'linux' ? 'Google chrome' : (
-    os.platform() === 'darwin' ? 'Google chrome' : (
-        os.platform() === 'win32' ? 'chrome' : 'firefox'));
+// var browser = os.platform() === 'linux' ? 'Google chrome' : (
+//     os.platform() === 'darwin' ? 'Google chrome' : (
+//         os.platform() === 'win32' ? 'chrome' : 'firefox'));
 
 /**
  * @description  自动打开浏览器
  */
-gulp.task('open', function(done) {
-    var urlArr = [host.location + ':' +  host.port, host.defaultPath];
-    return gulp.src('')
-        .pipe(gulpOpen({
-            app: browser,
-            uri: urlArr.join('/')
-        }));
-});
+// gulp.task('open', function(done) {
+//     var urlArr = [host.location + ':' +  host.port, host.defaultPath];
+//     return gulp.src('')
+//         .pipe(gulpOpen({
+//             app: browser,
+//             uri: urlArr.join('/')
+//         }));
+// });
 
 /**
  * @default connect task
  */
-gulp.task('connectDev', function() {
-    return connect.server({
-        root: host.devPath,
-        port: host.port,
-        livereload: true
-    });
-});
+// gulp.task('connectDev', function() {
+//     return connect.server({
+//         root: host.devPath,
+//         port: host.port,
+//         livereload: true
+//     });
+// });
 
-gulp.task('connectPrd', function() {
-    return connect.server({
-        root: host.prdPath,
-        port: host.port,
-        livereload: true
-    });
-});
+// gulp.task('connectPrd', function() {
+//     return connect.server({
+//         root: host.prdPath,
+//         port: host.port,
+//         livereload: true
+//     });
+// });
 
 /**
  * @default clean task
  */
-gulp.task('clean', function(done) {
-    return gulp.src([buildPath])
-        .pipe(clean({
-            force: true
-        }));
-});
+// gulp.task('clean', function(done) {
+//     return gulp.src([buildPath])
+//         .pipe(clean({
+//             force: true
+//         }));
+// });
 
 /**
  * @description 替换src下子模板 *.tpl，生成的html页面放在当前目录下
  * 用于模版的include
  */
-gulp.task('html', function(done) {
-    return gulp.src([tplFile])
-        .pipe(fileInclude({
-            prefix: '@@',
-            basepath: path.join(pagesPath)
-        }))
-        .pipe(rename({
-            extname: '.html'
-        }))
-        .pipe(gulp.dest(devBizPath))
-        .pipe(connect.reload());
-});
+// gulp.task('html', function(done) {
+//     return gulp.src([tplFile])
+//         .pipe(fileInclude({
+//             prefix: '@@',
+//             basepath: path.join(pagesPath)
+//         }))
+//         .pipe(rename({
+//             extname: '.html'
+//         }))
+//         .pipe(gulp.dest(devBizPath))
+//         .pipe(connect.reload());
+// });
 
 /**
  * @description 编译sass，自动补前缀
  * sass和css在同一个目录下
  */
-gulp.task('sass', function(done) {
-    return gulp.src(sassFile)
-        .pipe(sass().on('error', sass.logError))
-        //自动补全
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false,
-            remove: false
-        }))
-        // css文件
-        .pipe(gulp.dest(devBizPath))
-        .pipe(connect.reload());
-});
+// gulp.task('sass', function(done) {
+//     return gulp.src(sassFile)
+//         .pipe(sass().on('error', sass.logError))
+//         //自动补全
+//         .pipe(autoprefixer({
+//             browsers: ['last 2 versions'],
+//             cascade: false,
+//             remove: false
+//         }))
+//         // css文件
+//         .pipe(gulp.dest(devBizPath))
+//         .pipe(connect.reload());
+// });
 
 /**
  * webpack对js编译
@@ -176,54 +176,54 @@ gulp.task('js', ['buildjs'], function(done) {
  * copy css file
  * prd 环境生成版本号
  */
-gulp.task('mincss', ['sass'] ,function(done) {
-    return gulp.src(cssFile)
-        //压缩
-        .pipe(minifyCss({
-            compatibility: 'ie7'
-        }))
-        // 版本号
-        // .pipe(gulpif(config.env, rev()))
-        .pipe(gulp.dest(buildBizPath))
-        .pipe(rev())
-        .pipe(gulp.dest(buildBizPath))
-        // 版本号map
-        // .pipe(gulpif(config.env, rev.manifest()))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(cssVerPath));
-});
+// gulp.task('mincss', ['sass'] ,function(done) {
+//     return gulp.src(cssFile)
+//         //压缩
+//         .pipe(minifyCss({
+//             compatibility: 'ie7'
+//         }))
+//         // 版本号
+//         // .pipe(gulpif(config.env, rev()))
+//         .pipe(gulp.dest(buildBizPath))
+//         .pipe(rev())
+//         .pipe(gulp.dest(buildBizPath))
+//         // 版本号map
+//         // .pipe(gulpif(config.env, rev.manifest()))
+//         .pipe(rev.manifest())
+//         .pipe(gulp.dest(cssVerPath));
+// });
 
 /**
  * 压缩混淆JS
  */
-gulp.task('minjs', ['buildjs'], function() {
-    return gulp.src(jsFile)
-        .pipe(uglify())
-        .pipe(gulp.dest(buildBizPath))
-        .pipe(rev())
-        .pipe(gulp.dest(buildBizPath))
-        // 版本号map
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(jsVerPath));
-});
+// gulp.task('minjs', ['buildjs'], function() {
+//     return gulp.src(jsFile)
+//         .pipe(uglify())
+//         .pipe(gulp.dest(buildBizPath))
+//         .pipe(rev())
+//         .pipe(gulp.dest(buildBizPath))
+//         // 版本号map
+//         .pipe(rev.manifest())
+//         .pipe(gulp.dest(jsVerPath));
+// });
 
 /**
  * 压缩 HTML
  * 引入 CSS JS 版本号
  */
-gulp.task('minhtml', ['html'], function() {
-    var cssVerFile = path.join(cssVerPath, './rev-manifest.json');
-    var jsVerFile = path.join(jsVerPath, './rev-manifest.json');
+// gulp.task('minhtml', ['html'], function() {
+//     var cssVerFile = path.join(cssVerPath, './rev-manifest.json');
+//     var jsVerFile = path.join(jsVerPath, './rev-manifest.json');
 
-    return gulp.src([cssVerFile, jsVerFile, htmlFile])
-        .pipe(revCollector())
-        .pipe(minifyHtml({
-            empty: true,
-            spare: true,
-            quotes: true
-        }))
-        .pipe(gulp.dest(buildBizPath));
-});
+//     return gulp.src([cssVerFile, jsVerFile, htmlFile])
+//         .pipe(revCollector())
+//         .pipe(minifyHtml({
+//             empty: true,
+//             spare: true,
+//             quotes: true
+//         }))
+//         .pipe(gulp.dest(buildBizPath));
+// });
 
 /**
  * watch

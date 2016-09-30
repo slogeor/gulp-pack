@@ -1,5 +1,5 @@
 {
-  "_components/styles/index.min.css": "_components/styles/index-f7407df3ff.min.css",
-  "_components/styles/lib/base.css": "_components/styles/lib/base-f7407df3ff.css",
-  "home/index.css": "home/index-961c6d1ad2.css"
+  "mods/styles/css/base.css": "mods/styles/css/base-d41d8cd98f.css",
+  "mods/styles/css/reset.css": "mods/styles/css/reset-d41d8cd98f.css",
+  "pages/home/index.css": "pages/home/index-7991ddec56.css"
 }

@@ -1,4 +1,4 @@
-@import '../_components/styles/scss/_mixin.scss';
+@import '../../mods/styles/scss/index.scss';
 body {
     @include g-resize(80%);
     text-align: center;
