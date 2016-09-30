@@ -15,8 +15,6 @@ gulpTaskList.forEach(function (taskfile) {
     }
 });
 
-
 gulp.task('default', function(callback) {
-    runSequence('html', 'sass',
-        callback);
+    runSequence('html', 'sass', 'buildjs', ['connect', 'watch'], callback);
 });

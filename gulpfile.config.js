@@ -2,17 +2,22 @@ module.exports = {
     common: {
         srcRoot: './src',
         buildRoot: './build',
+        // pages
         srcPagesPath: './src/pages',
         buildPagesPath: './build/pages',
+        defaultPath: './pages/home',
+        // sass、css
         sassFile: './src/**/*.scss',
         excludeSassFile: '!./src/mods/styles/scss/**/*.scss',
         cssFile: './src/**/*.css',
-        srcJSFile: './src/**/*.js',
+        jsFile: './src/**/*.js',
+        // tpl、html
+        tplFile: './**/*.tpl',
+        excludeTplFile: '!./src/mods/views/**/*.tpl',
+        htmlFile: './src/pages/**/*.html',
+        // version
         cssVerPath: './src/version/css',
         jsVerPath: './src/version/js',
-        defaultPath: './pages/home',
-        tplFile: './pages/**/*.tpl',
-        htmlFile: './src/pages/**/*.html',
         cssVersion: './src/version/css/rev-manifest.json',
         jsVersion: './src/version/js/rev-manifest.json',
     },

@@ -5,7 +5,7 @@ module.exports = function (gulp, gulpConfig, plugins) {
     var buildRoot = common.buildRoot;
 
     gulp.task('mincss', ['sass'], function (done) {
-        return gulp.src(common.srcCssFile)
+        return gulp.src(common.cssFile)
             //压缩
             .pipe(plugins.minifyCss({
                 compatibility: 'ie7'
@@ -21,7 +21,7 @@ module.exports = function (gulp, gulpConfig, plugins) {
     });
 
     gulp.task('minjs', ['buildjs'], function () {
-        return gulp.src(common.srcJSFile)
+        return gulp.src(common.jsFile)
             .pipe(plugins.uglify())
             .pipe(gulp.dest(buildRoot))
             .pipe(plugins.rev())
@@ -32,13 +32,13 @@ module.exports = function (gulp, gulpConfig, plugins) {
     });
 
     gulp.task('minhtml', ['html'], function () {
-        return gulp.src([common.cssManifest, common.cssManifest, common.pagesHtmlFile])
+        return gulp.src([common.cssVersion, common.jsVersion, common.htmlFile])
             .pipe(plugins.revCollector())
             .pipe(plugins.minifyHtml({
                 empty: true,
                 spare: true,
                 quotes: true
             }))
-            .pipe(gulp.dest(common.pagesHtmlPath));
+            .pipe(gulp.dest(common.buildPagesPath));
     });
 };

@@ -3,20 +3,19 @@
 module.exports = function (gulp, gulpConfig, plugins) {
     var path = require('path');
     var common = gulpConfig.common;
-    var srcRoot = common.srcRoot;
-    var pagesTplFile = common.pagesTplFile;
+    var tplFile = common.tplFile;
+    var excludeTplFile = common.excludeTplFile;
 
     gulp.task('html', function (done) {
-        console.log(pagesTplFile, common.srcPages);
-        return gulp.src(pagesTplFile)
+        return gulp.src([tplFile, excludeTplFile])
             .pipe(plugins.fileInclude({
                 prefix: '@@',
-                basepath: path.join(srcRoot)
+                basepath: path.join(common.srcRoot)
             }))
             .pipe(plugins.rename({
                 extname: '.html'
             }))
-            .pipe(gulp.dest(common.srcPages))
+            .pipe(gulp.dest('./'))
             .pipe(plugins.connect.reload());
     });
 };

@@ -15,8 +15,9 @@ module.exports = function (gulp, gulpConfig, plugins) {
         });
     });
 
-    // gulp.task('js', ['buildjs'], function (done) {
-    //     return gulp.src(jsFile)
-    //         .pipe(plugins.connect.reload());
-    // });
+
+    gulp.task('js', ['buildjs'], function (done) {
+        return gulp.src(gulpConfig.common.jsFile)
+            .pipe(plugins.connect.reload());
+    });
 };
