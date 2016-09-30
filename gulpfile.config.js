@@ -11,6 +11,9 @@ module.exports = {
         excludeSassFile: '!./src/mods/styles/scss/**/*.scss',
         cssFile: './src/**/*.css',
         jsFile: './src/**/*.js',
+        cssLibFile: './src/mods/styles/css/lib/*.css',
+        cssLibIndex: './src/mods/styles/css/index.css',
+        cssLib: './src/mods/styles/css',
         // tpl、html
         tplFile: './**/*.tpl',
         excludeTplFile: '!./src/mods/views/**/*.tpl',
@@ -21,18 +24,13 @@ module.exports = {
         cssVersion: './src/version/css/rev-manifest.json',
         jsVersion: './src/version/js/rev-manifest.json',
     },
-
     host: {
         // 访问地址
         location: 'http://127.0.0.1',
         // 端口号
         port: 9000
     },
-
     evn: {
 
     }
 };
-
-
-
