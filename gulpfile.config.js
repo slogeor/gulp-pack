@@ -4,6 +4,7 @@ module.exports = {
         srcRoot: './src',
         buildRoot: './build',
         pagesHtmlPath: './build/pages',
+        srcPages: './src/pages',
         defaultPath: './pages/home',
         pagesTplFile: './pages/**/*.tpl',
         pagesHtmlFile: './src/pages/**/*.html',

@@ -20,53 +20,53 @@
  * webpack: webapck插件
  * webpackConfig: webpack配置文件
  */
-var gulp = require('gulp'),
-    runSequence = require('run-sequence'),
-    path = require('path'),
-    gutil = require('gulp-util'),
-    os = require('os'),
-    gulpOpen = require('gulp-open'),
-    connect = require('gulp-connect'),
-    gulpif = require('gulp-if'),
-    sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
-    minifyCss = require('gulp-minify-css'),
-    minifyHtml = require('gulp-minify-html'),
-    fileInclude = require('gulp-file-include'),
-    uglify = require('gulp-uglify'),
-    rev = require('gulp-rev'),
-    revCollector = require('gulp-rev-collector'),
-    clean = require('gulp-clean'),
-    rename = require('gulp-rename'),
-    webpack = require('webpack'),
-    webpackConfig = require('./webpack.config.js');
+// var gulp = require('gulp'),
+//     runSequence = require('run-sequence'),
+//     path = require('path'),
+//     gutil = require('gulp-util'),
+//     os = require('os'),
+//     gulpOpen = require('gulp-open'),
+//     connect = require('gulp-connect'),
+//     gulpif = require('gulp-if'),
+//     sass = require('gulp-sass'),
+//     autoprefixer = require('gulp-autoprefixer'),
+//     minifyCss = require('gulp-minify-css'),
+//     minifyHtml = require('gulp-minify-html'),
+//     fileInclude = require('gulp-file-include'),
+//     uglify = require('gulp-uglify'),
+//     rev = require('gulp-rev'),
+//     revCollector = require('gulp-rev-collector'),
+//     clean = require('gulp-clean'),
+//     rename = require('gulp-rename'),
+//     webpack = require('webpack'),
+//     webpackConfig = require('./webpack.config.js');
 
-// webpack
-var devConfig = Object.create(webpackConfig);
-var devCompiler = webpack(devConfig);
+// // webpack
+// var devConfig = Object.create(webpackConfig);
+// var devCompiler = webpack(devConfig);
 
-//gulpfile 配置信息
-var gulpConfig = require('./gulpfile.config.js');
-var pathCfg = gulpConfig.pathCfg;
-var host = gulpConfig.host;
-var config = gulpConfig.config;
+// //gulpfile 配置信息
+// var gulpConfig = require('./gulpfile.config.js');
+// var pathCfg = gulpConfig.pathCfg;
+// var host = gulpConfig.host;
+// var config = gulpConfig.config;
 
-var bizDir = pathCfg.bizDir;
-var pagesPath = pathCfg.pages;
-var versionPath = pathCfg.version;
-var devPath  = pathCfg.dev;
-var buildPath = pathCfg.build;
-var buildBizPath = path.join(buildPath, bizDir);
-var devBizPath = path.join(devPath, bizDir);
-var cssVerPath = path.join(versionPath, './css');
-var jsVerPath = path.join(versionPath, './js');
+// var bizDir = pathCfg.bizDir;
+// var pagesPath = pathCfg.pages;
+// var versionPath = pathCfg.version;
+// var devPath  = pathCfg.dev;
+// var buildPath = pathCfg.build;
+// var buildBizPath = path.join(buildPath, bizDir);
+// var devBizPath = path.join(devPath, bizDir);
+// var cssVerPath = path.join(versionPath, './css');
+// var jsVerPath = path.join(versionPath, './js');
 
-var sassFile = path.join(pagesPath, '/**/*.scss');
-var cssFile = path.join(pagesPath, '/**/*.css');
-var tplFile = path.join(pagesPath, '/**/*.tpl');
-var htmlFile = path.join(pagesPath, '/**/*.html');
-var buildJsFile = path.join(pagesPath, '/**/*/index.js');
-var jsFile = path.join(pagesPath, '/**/*.js');
+// var sassFile = path.join(pagesPath, '/**/*.scss');
+// var cssFile = path.join(pagesPath, '/**/*.css');
+// var tplFile = path.join(pagesPath, '/**/*.tpl');
+// var htmlFile = path.join(pagesPath, '/**/*.html');
+// var buildJsFile = path.join(pagesPath, '/**/*/index.js');
+// var jsFile = path.join(pagesPath, '/**/*.js');
 
 /**
  * @description 选择打开浏览器
@@ -155,20 +155,20 @@ var jsFile = path.join(pagesPath, '/**/*.js');
 /**
  * webpack对js编译
  */
-gulp.task('buildjs', function(callback) {
-    devCompiler.run(function(err, stats) {
-        if (err) throw new gutil.PluginError('webpack:buildjs', err);
-        gutil.log('[webpack:buildjs]', stats.toString({
-            colors: true
-        }));
-        callback();
-    });
-});
+// gulp.task('buildjs', function(callback) {
+//     devCompiler.run(function(err, stats) {
+//         if (err) throw new gutil.PluginError('webpack:buildjs', err);
+//         gutil.log('[webpack:buildjs]', stats.toString({
+//             colors: true
+//         }));
+//         callback();
+//     });
+// });
 
-gulp.task('js', ['buildjs'], function(done) {
-    return gulp.src(jsFile)
-        .pipe(connect.reload());
-});
+// gulp.task('js', ['buildjs'], function(done) {
+//     return gulp.src(jsFile)
+//         .pipe(connect.reload());
+// });
 
 /**
  * 依赖 sass

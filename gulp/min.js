@@ -41,5 +41,4 @@ module.exports = function (gulp, gulpConfig, plugins) {
             }))
             .pipe(gulp.dest(common.pagesHtmlPath));
     });
-
 };

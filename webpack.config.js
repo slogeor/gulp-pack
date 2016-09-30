@@ -14,8 +14,7 @@ module.exports = {
         root: path.resolve(process.cwd()),
         extensions: ['', '.js', '.json'],
         alias: {
-            'pages': 'src/pages/',
-            'components': 'src/pages/_components/'
+            'pages': 'src/pages/'
         }
     },
     plugins: [
