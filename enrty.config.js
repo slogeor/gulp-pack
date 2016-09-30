@@ -1,3 +1,4 @@
 module.exports = [
-    './src/pages/home/'
+    './src/mods/scripts',
+    './src/pages/home'
 ];

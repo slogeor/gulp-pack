@@ -7,7 +7,8 @@ module.exports = function (gulp, gulpConfig, plugins) {
     var pagesTplFile = common.pagesTplFile;
 
     gulp.task('html', function (done) {
-        return gulp.src([pagesTplFile])
+        console.log(pagesTplFile, common.srcPages);
+        return gulp.src(pagesTplFile)
             .pipe(plugins.fileInclude({
                 prefix: '@@',
                 basepath: path.join(srcRoot)
@@ -15,7 +16,7 @@ module.exports = function (gulp, gulpConfig, plugins) {
             .pipe(plugins.rename({
                 extname: '.html'
             }))
-            .pipe(gulp.dest(srcRoot))
+            .pipe(gulp.dest(common.srcPages))
             .pipe(plugins.connect.reload());
     });
 };

@@ -1,20 +1,19 @@
 module.exports = {
     common: {
-        // 源目录
         srcRoot: './src',
         buildRoot: './build',
-        pagesHtmlPath: './build/pages',
-        srcPages: './src/pages',
-        defaultPath: './pages/home',
-        pagesTplFile: './pages/**/*.tpl',
-        pagesHtmlFile: './src/pages/**/*.html',
-        pagesSassFile: './src/pages/**/*.sass',
-        srcCssFile: './src/**/*.css',
+        srcPagesPath: './src/pages',
+        buildPagesPath: './build/pages',
+        sassFile: './src/**/*.sass',
+        cssFile: './src/**/*.css',
         srcJSFile: './src/**/*.js',
         cssVerPath: './src/version/css',
         jsVerPath: './src/version/js',
-        cssManifest: './src/version/css/rev-manifest.json',
-        jsManifest: './src/version/js/rev-manifest.json',
+        defaultPath: './pages/home',
+        tplFile: './pages/**/*.tpl',
+        htmlFile: './src/pages/**/*.html',
+        cssVersion: './src/version/css/rev-manifest.json',
+        jsVersion: './src/version/js/rev-manifest.json',
     },
 
     host: {
