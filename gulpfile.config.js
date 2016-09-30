@@ -5,6 +5,7 @@ module.exports = {
         // pages
         srcPagesPath: './src/pages',
         buildPagesPath: './build/pages',
+        buildPagesFile: './build/pages/**/*.html',
         defaultPath: './pages/home',
         // sass、css
         sassFile: './src/**/*.scss',

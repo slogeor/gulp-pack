@@ -18,3 +18,7 @@ gulpTaskList.forEach(function (taskfile) {
 gulp.task('default', function(callback) {
     runSequence('concat', 'sass', 'html', 'buildjs', ['connect', 'watch'], callback);
 });
+
+gulp.task('build', function(callback) {
+    runSequence('mincss', 'minjs', 'minhtml', callback);
+});

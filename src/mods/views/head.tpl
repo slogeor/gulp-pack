@@ -6,4 +6,4 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="apple-touch-fullscreen" content="yes">
-    <link rel="stylesheet" href="../../mods/styles/css/index.css">
+    <link rel="stylesheet" href="/mods/styles/css/index.css">
