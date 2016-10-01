@@ -4,8 +4,6 @@ module.exports = function (gulp, gulpConfig, plugins) {
     gulp.task('sass', function (done) {
         var common = gulpConfig.common;
         var srcRoot = common.srcRoot;
-        console.log(common.sassFile, srcRoot);
-
         return gulp.src([common.sassFile, common.excludeSassFile])
             .pipe(plugins.sass().on('error', plugins.sass.logError))
             //自动补全

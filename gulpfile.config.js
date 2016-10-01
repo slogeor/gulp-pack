@@ -29,9 +29,9 @@ module.exports = {
         // 访问地址
         location: 'http://127.0.0.1',
         // 端口号
-        port: 9000
+        port: 9000,
+        online: 'http://127.0.0.1'
     },
     evn: {
-
     }
 };
