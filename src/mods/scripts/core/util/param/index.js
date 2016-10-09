@@ -11,38 +11,29 @@ function _queryParam(url) {
         hashMap = {};
 
     if (search) {
-        result = search.split("&") || [];
+        result = search.split('&') || [];
     }
 
     // 解析search
     for (var i = 0, len = result.length; i < len; i++) {
         // 分割每一项
-        var searchArr = result[i].split("=");
+        var searchArr = result[i].split('=');
         // 存对象
         paramMap[searchArr[0]] = searchArr[1] || '';
     }
 
     // 解析hash
     if (hashValue) {
-        var hashArr = hashValue.split("=");
+        var hashArr = hashValue.split('=');
         hashMap[hashArr[0]] = hashArr[1] || '';
     }
 
     return {
         /**
-         * 获取url参数列表
-         * @return {Array}
-         */
-        'all': function () {
-            var allParam = avalon.mix(true, {}, paramMap, hashMap);
-            return allParam;
-        },
-
-        /**
          * 获取url查询参数对象
          * @return {Object}
          */
-        'search': function () {
+        search: function () {
             return paramMap;
         },
 
@@ -50,7 +41,7 @@ function _queryParam(url) {
          * 获取pathname
          * @return {string} 参数取值
          */
-        "getPathName": function () {
+        getPathName: function () {
             return url.pathname;
         },
 
@@ -58,7 +49,7 @@ function _queryParam(url) {
          * 获取hostname
          * @return {string} 参数取值
          */
-        "getHostName": function () {
+        getHostName: function () {
             return url.hostname;
         },
 
@@ -66,7 +57,7 @@ function _queryParam(url) {
          * 获取url
          * @return {string} 参数取值
          */
-        "getHref": function () {
+        getHref: function () {
             return url.href;
         },
 
@@ -75,7 +66,7 @@ function _queryParam(url) {
          * @param  {string} key 查询参数
          * @return {string} value 参数取值
          */
-        "param": function (key) {
+        param: function (key) {
             return paramMap.hasOwnProperty(key) ? paramMap[key] : '';
         },
 
@@ -83,7 +74,7 @@ function _queryParam(url) {
          * 获取hash对象
          * @return  {Object}
          */
-        'hash': function () {
+        hash: function () {
             return hashMap;
         },
 
@@ -92,10 +83,10 @@ function _queryParam(url) {
          * @param  key {string} 查询参数
          * @return {string} 参数取值
          */
-        'getHash': function (key) {
+        getHash: function (key) {
             return hashMap.hasOwnProperty(key) ? hashMap[key] : undefined;
         }
     };
 }
 
-window.GLOBAL.util.date = _queryParam(window.location);
+window.GLOBAL.util.param = _queryParam(window.location);

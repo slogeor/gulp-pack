@@ -64,7 +64,7 @@ var parser = {
         var len = length || 30;
         var truncationStr = !truncation ? '...' : truncation;
         return target.length > len ? target.slice(0, len) + truncationStr : String(target);
-    },
+    }
 };
 
 window.GLOBAL.util.parser = parser;

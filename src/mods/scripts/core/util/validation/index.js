@@ -9,4 +9,4 @@ var valid = {
     }
 };
 
-window.GLOBAL.util.validation = validation;
+window.GLOBAL.util.validation = valid;
