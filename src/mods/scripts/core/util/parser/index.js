@@ -81,6 +81,16 @@ var parser = {
      */
     escapeRegExp: function (str) {
         return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+    },
+
+    /**
+     * @description  格式化时间字符串
+     * @eg: formatTimeNumber(1) ==> 01
+     * @eg: formatTimeNumber(11) ==> 11
+     */
+    formatTimeNumber: function (num) {
+        var n = num.toString();
+        return n[1] ? n : '0' + n;
     }
 };
 
