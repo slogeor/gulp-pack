@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0; }
+
+ul, li {
+  padding: 0;
+  list-style-type: none; }
+
+.list {
+  width: 960px;
+  min-height: 800px;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: #eee; }
