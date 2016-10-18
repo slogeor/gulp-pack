@@ -3,6 +3,7 @@
 module.exports = function(gulp, gulpConfig, plugins) {
     var common = gulpConfig.common;
     var buildRoot = common.buildRoot;
+    var prefixUrl = gulpConfig.host.online;
 
     gulp.task('mincss', ['sass'], function(done) {
         return gulp.src(common.cssFile)
@@ -34,17 +35,19 @@ module.exports = function(gulp, gulpConfig, plugins) {
     gulp.task('minhtml', ['html'], function() {
         return gulp.src([common.cssVersion, common.jsVersion, common.htmlFile])
             // https://github.com/shonny-ua/gulp-rev-collector/issues/17
-            .pipe(plugins.revCollector({
-                replaceReved: true,
-                dirReplacements: {
-                    '/': gulpConfig.host.online
-                }
-            }))
+            .pipe(plugins.revCollector())
+            // .pipe(plugins.revCollector({
+            //     replaceReved: true,
+            //     dirReplacements: {
+            //         '/': gulpConfig.host.online
+            //     }
+            // }))
             .pipe(plugins.minifyHtml({
                 empty: true,
                 spare: true,
                 quotes: true
             }))
+            .pipe(plugins.prefix(prefixUrl, null, '{{'))
             .pipe(gulp.dest(common.buildPagesPath));
     });
 };

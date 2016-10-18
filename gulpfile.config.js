@@ -30,7 +30,7 @@ module.exports = {
         location: 'http://127.0.0.1',
         // 端口号
         port: 9000,
-        online: 'http://127.0.0.1'
+        online: 'http://127.0.0.1:9100'
     },
     evn: {
     }
