@@ -2,5 +2,7 @@
   "mods/styles/css/index.css": "mods/styles/css/index-4f1652c682.css",
   "mods/styles/css/lib/base.css": "mods/styles/css/lib/base-fbb63d22ea.css",
   "mods/styles/css/lib/reset.css": "mods/styles/css/lib/reset-92d8ea6a47.css",
+  "pages/components/index.css": "pages/components/index-265c9f44e3.css",
+  "pages/components/loading/index.css": "pages/components/loading/index-bb89c3cd2c.css",
   "pages/home/index.css": "pages/home/index-7991ddec56.css"
 }

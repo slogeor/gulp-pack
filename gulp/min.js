@@ -3,6 +3,7 @@
 module.exports = function(gulp, gulpConfig, plugins) {
     var common = gulpConfig.common;
     var buildRoot = common.buildRoot;
+    var prefixUrl = gulpConfig.host.online;
 
     gulp.task('mincss', ['sass'], function(done) {
         return gulp.src(common.cssFile)
@@ -46,6 +47,7 @@ module.exports = function(gulp, gulpConfig, plugins) {
                 spare: true,
                 quotes: true
             }))
+            .pipe(plugins.prefix(prefixUrl, null, '{{'))
             .pipe(gulp.dest(common.buildPagesPath));
     });
 };
