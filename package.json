@@ -37,5 +37,9 @@
     "path": "^0.12.7",
     "run-sequence": "^1.2.2",
     "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "vue-resource": "^1.0.3",
+    "vue-upload-component": "^2.0.0-beta"
   }
 }
