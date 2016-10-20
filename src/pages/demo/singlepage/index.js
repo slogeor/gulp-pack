@@ -87,6 +87,7 @@ var vue = new Vue({
 
         // 地区改动
         changeRegion: function (type) {
+            console.log(JSON.stringify(this.basicInfo));
             var vm = this;
             if (type === 'province') {
                 vm.getSubarea(vm.basicInfo.provinceId, 'city');

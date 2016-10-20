@@ -54,7 +54,7 @@
      <div id="app" class="container">
         <header class="hue-navbar hue-navbar__special">
             <span class="hue-arrow hue-arrow-left"></span>
-            <h1 class="hue-navbar-wrap">美团-酒店商家入驻 {{myform.$invalid}}-{{config.submit}}</h1>
+            <h1 class="hue-navbar-wrap">美团-酒店商家入驻</h1>
         </header>
         <form  v-form name="myform" @submit.prevent="onSubmit" id="uploadForm" enctype="multipart/form-data">
             <section>
@@ -83,18 +83,21 @@
                                         <option value="-1">请选择省份</option>
                                         <option v-for="item in config.provinceList" v-bind:value="item.code">{{item.name}}</option>
                                     </select>
+                                    <span class="hue-arrow hue-arrow-down hue-arrow-down__special"></span>
                                 </div>
                                 <div class="hue-flex-item">
                                     <select v-model="basicInfo.cityId" class="hue-select"  @change="changeRegion('city')">
                                         <option value="-1">请选择城市</option>
                                         <option v-for="item in config.cityList" v-bind:value="item.code">{{item.name}}</option>
                                     </select>
+                                    <span class="hue-arrow hue-arrow-down hue-arrow-down__special"></span>
                                 </div>
                                 <div class="hue-flex-item">
                                     <select v-model="basicInfo.locationId" class="hue-select">
                                         <option value="-1">请选择区域</option>
                                         <option v-for="item in config.locationList" v-bind:value="item.code">{{item.name}}</option>
                                     </select>
+                                    <span class="hue-arrow hue-arrow-down hue-arrow-down__special"></span>
                                 </div>
                             </div>
                         </div>

@@ -55,6 +55,11 @@
 
 .container .hue-select {
   width: 95%;
-  border: 1px solid #aaa;
-  box-sizing: .25rem;
-  text-indent: .1rem; }
+  border: 0.01rem solid #aaa;
+  text-indent: .1rem;
+  padding: 0.1rem 0; }
+
+.container .hue-arrow-down__special {
+  position: absolute;
+  right: 10%;
+  top: .25rem; }
