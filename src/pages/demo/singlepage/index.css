@@ -13,11 +13,14 @@
   -webkit-font-smoothing: antialiased; }
   [class^="hueui-icon-"]:before, [class*=" hueui-icon-"]:before {
     display: inline-block;
-    margin-left: .2em;
-    margin-right: .2em; }
+    margin-left: .2rem;
+    margin-right: .2rem; }
+
+.hide {
+  display: none; }
 
 .hueui-icon-warn {
-  font-size: 23px;
+  font-size: .4rem;
   color: #F43530; }
   .hueui-icon-warn:before {
     content: "\EA0B"; }
@@ -43,4 +46,15 @@
   .container .hue-flex-item .hue-item-warn {
     position: absolute;
     right: 0;
-    top: 0px; }
+    top: 0; }
+
+.container .hue-file {
+  height: 0.5rem;
+  padding-top: .2rem;
+  box-sizing: content-box; }
+
+.container .hue-select {
+  width: 95%;
+  border: 1px solid #aaa;
+  box-sizing: .25rem;
+  text-indent: .1rem; }

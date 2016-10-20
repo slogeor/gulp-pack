@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no, address=no">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <title>loading</title>
+        <link rel="stylesheet" type="text/css" href="/pages/components/dropdown/index.css">
+        <script type="text/javascript">
+        (function () {
+            var setViewport = function (scale) {
+                var meta = document.querySelector('meta[name="viewport"]');
+                if (!meta) {
+                    meta = document.createElement("meta");
+                    meta.setAttribute("name", "viewport");
+                    document.getElementsByTagName("head")[0].appendChild(meta);
+                }
+                var content = "width=device-width,user-scalable=no" + ",initial-scale=" + scale + ",maximum-scale=" + scale + ",minimum-scale=" + scale;
+                meta.setAttribute("content", content);
+            };
+            var updateViewport = function () {
+                var dpr = window.devicePixelRatio;
+                dpr = dpr >= 2 ? 2 : 1;
+                if (dpr > 1) {
+                    var scale = 1 / dpr;
+                    setViewport(scale);
+                }
+                var root = document.documentElement;
+                var width = root.getBoundingClientRect().width;
+                console.log(width)
+                if (width < 375) {
+                    width = 375;
+                }
+                if (width > 1080) {
+                    width = 1080;
+                }
+
+                var rem = (width / 7.5).toFixed(4);
+                root.style.fontSize = rem + "px";
+            };
+            updateViewport();
+            window.addEventListener("resize", updateViewport);
+        })();
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="hue-dropdown">
+                <div class="hue-dropdown-header">
+                    <span class="am-selected-status am-fl">Orange</span>
+                    <i class="am-selected-icon am-icon-caret-down"></i>
+                </div>
+
+                <div class="am-selected-content am-dropdown-content" style="min-width: 200px; display:none;">
+                    <ul class="am-selected-list">
+                        <li class="" data-index="0" data-group="0" data-value="a">
+                            <span class="am-selected-text">Apple</span>
+                        </li>
+                        <li class="" data-index="1" data-group="0" data-value="b">
+                            <span class="am-selected-text">Banana</span>
+                        </li>
+                        <li class="am-checked" data-index="2" data-group="0" data-value="o">
+                            <span class="am-selected-text">Orange</span>
+                        </li>
+                        <li class="" data-index="3" data-group="0" data-value="m">
+                            <span class="am-selected-text">Mango</span>
+                        </li>
+                    </ul>
+                    <div class="am-selected-hint"></div>
+                </div>
+            </div>
+        </body>
+    </html>

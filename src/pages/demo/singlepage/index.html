@@ -14,165 +14,213 @@
     <link rel="stylesheet" href="http://awp-assets.meituan.net/h5/hue/2.0.1/hue.css" charset="utf-8">
     <link rel="stylesheet" href="./index.css" charset="utf-8">
     <script type="text/javascript">
-    (function(){var setViewport=function(scale){var meta=document.querySelector('meta[name="viewport"]');if(!meta){meta=document.createElement("meta");meta.setAttribute("name","viewport");document.getElementsByTagName("head")[0].appendChild(meta)}var content="width=device-width,user-scalable=no"+",initial-scale="+scale+",maximum-scale="+scale+",minimum-scale="+scale;meta.setAttribute("content",content)};var updateViewport=function(){var dpr=window.devicePixelRatio;dpr=dpr>=2?2:1;if(dpr>1){var scale=1/dpr;setViewport(scale)}var root=document.documentElement;var width=root.getBoundingClientRect().width;var rem=(width/7.5).toFixed(4);root.style.fontSize=rem+"px"};updateViewport();window.addEventListener("resize",updateViewport)})();
+        (function () {
+            var setViewport = function (scale) {
+                var meta = document.querySelector('meta[name="viewport"]');
+                if (!meta) {
+                    meta = document.createElement("meta");
+                    meta.setAttribute("name", "viewport");
+                    document.getElementsByTagName("head")[0].appendChild(meta);
+                }
+                var content = "width=device-width,user-scalable=no" + ",initial-scale=" + scale + ",maximum-scale=" + scale + ",minimum-scale=" + scale;
+                meta.setAttribute("content", content);
+            };
+            var updateViewport = function () {
+                var dpr = window.devicePixelRatio;
+                dpr = dpr >= 2 ? 2 : 1;
+                if (dpr > 1) {
+                    var scale = 1 / dpr;
+                    setViewport(scale);
+                }
+                var root = document.documentElement;
+                var width = root.getBoundingClientRect().width;
+                console.log(width)
+                if (width < 375) {
+                    width = 375;
+                }
+                if (width > 1080) {
+                    width = 1080;
+                }
+
+                var rem = (width / 7.5).toFixed(4);
+                root.style.fontSize = rem + "px";
+            };
+            updateViewport();
+            window.addEventListener("resize", updateViewport);
+        })();
     </script>
 </head>
 <body>
      <div id="app" class="container">
         <header class="hue-navbar hue-navbar__special">
             <span class="hue-arrow hue-arrow-left"></span>
-            <h1 class="hue-navbar-wrap">美团-酒店商家入驻</h1>
+            <h1 class="hue-navbar-wrap">美团-酒店商家入驻 {{myform.$invalid}}-{{config.submit}}</h1>
         </header>
-        <section>
-            <header><h4 class="header">基本信息</h4></header>
-            <div class="hue-list">
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">酒店名称</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写完成酒店名称">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hue-list-item  hue-list-item__special">
-                    <div class="hue-list-content">所在地区</div>
-                    <div class="hue-list-arrow">
-                        <span class="hue-arrow hue-arrow-right"></span>
-                    </div>
-                </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item">
-                                <select>
-                                    <option>1</option>
-                                </select>
-                            </div>
-                            <div class="hue-flex-item">1/3</div>
-                            <div class="hue-flex-item">1/3</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">酒店地址</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写酒店地址">
-                                <div class="hue-item-warn">
-                                    <i class="hueui-icon-warn"></i>
+        <form  v-form name="myform" @submit.prevent="onSubmit" id="uploadForm" enctype="multipart/form-data">
+            <section>
+                <header><h4 class="header">基本信息</h4></header>
+                <div class="hue-list">
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">酒店名称</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="text" v-model="basicInfo.poiName" name="poiname" placeholder="请填写完成酒店名称" v-form-ctrl required>
+                                    <div class="hue-item-warn" v-if="(myform.poiname.$dirty && myform.poiname.$invalid) || (myform.poiname.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item  hue-list-item__special">
+                        <div class="hue-list-content">所在地区</div>
+                        <div class="hue-list-arrow"><span class="hue-arrow hue-arrow-right"></span></div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item">
+                                    <select v-model="basicInfo.provinceId" class="hue-select" @change="changeRegion('province')">
+                                        <option value="-1">请选择省份</option>
+                                        <option v-for="item in config.provinceList" v-bind:value="item.code">{{item.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="hue-flex-item">
+                                    <select v-model="basicInfo.cityId" class="hue-select"  @change="changeRegion('city')">
+                                        <option value="-1">请选择城市</option>
+                                        <option v-for="item in config.cityList" v-bind:value="item.code">{{item.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="hue-flex-item">
+                                    <select v-model="basicInfo.locationId" class="hue-select">
+                                        <option value="-1">请选择区域</option>
+                                        <option v-for="item in config.locationList" v-bind:value="item.code">{{item.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">酒店地址</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="text" v-model="basicInfo.address" name="address" placeholder="请填写酒店地址" v-form-ctrl required>
+                                    <div class="hue-item-warn" v-if="(myform.address.$dirty && myform.address.$invalid) || (myform.address.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">前台电话</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="tel" v-model="basicInfo.phone" name="basicphone" placeholder="请填写前台电话" v-form-ctrl pattern="^[0-9\-(*)\(\)]+$" required>
+                                    <div class="hue-item-warn" v-if="(myform.basicphone.$dirty && myform.basicphone.$invalid) || (myform.basicphone.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">房间数量</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="tel" v-model="basicInfo.roomCount" name="roomcount" placeholder="请填写房间数量" v-form-ctrl required pattern="^[0-9]+$">
+                                    <div class="hue-item-warn" v-if="(myform.roomcount.$dirty && myform.roomcount.$invalid) || (myform.roomcount.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item hue-list-item__special">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">酒店介绍</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item" flex="3">
+                                    <textarea rows="5" cols="50" placeholder="可选填" v-model="basicInfo.introduction" name="introduction"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <header><h4 class="header">证照信息</h4></header>
+                <div class="hue-list">
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">酒店证照(选填)</div>
+                        <div class="hue-list-arrow">
+                            <span class="hue-arrow hue-arrow-right"></span>
+                        </div>
+                    </div>
 
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                        <div v-if="!image">
+                            <input type="file" @change="onFileChange" class="hue-file">
+                        </div>
+                         <div v-else>
+                            <img :src="image" />
+                            <button @click="removeImage">Remove image</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <header><h4 class="header">酒店联系人</h4></header>
+                <div class="hue-list">
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">酒店联系人</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="number" v-model="contactInfo.name" name="contactname" placeholder="请填写身份证上的姓名" v-form-ctrl required>
+                                    <div class="hue-item-warn" v-if="(myform.contactname.$dirty && myform.contactname.$invalid) || (myform.contactname.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">联系人手机</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="tel" v-model="contactInfo.phone" name="contactphone" placeholder="请填写联系人手机号码" v-form-ctrl required pattern="^[0-9]{11}$" maxlength="11">
+                                    <div class="hue-item-warn" v-if="(myform.contactphone.$dirty && myform.contactphone.$invalid) || (myform.contactphone.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hue-list-item">
+                        <div class="hue-list-content">
+                            <div class="hue-flex">
+                                <div class="hue-flex-item hue-fc-3">联系人邮箱</div>
+                                <div class="hue-flex-item" flex="3">
+                                    <input type="email" v-model="contactInfo.email" name="contactemail" placeholder="请填写联系人邮箱" v-form-ctrl required>
+                                    <div class="hue-item-warn" v-if="(myform.contactemail.$dirty && myform.contactemail.$invalid) || (myform.contactemail.$invalid && config.submit)"><i class="hueui-icon-warn"></i></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">前台电话</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写前台电话">
-                            </div>
-                        </div>
-                    </div>
+            </section>
+            <section>
+                <div class="hue-block hue-flex">
+                    <button class="hue-flex-item hue-btn hue-btn-primary mr-20" flex="1" type="button" v-on:click="submitForm">提交</button>
                 </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">房间数量</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写房间数量">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hue-list-item hue-list-item__special">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">酒店介绍</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3"></div>
-                            <div class="hue-flex-item" flex="3">
-                                <textarea rows="5" cols="50" placeholder="可选填"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <header><h4 class="header">证照信息</h4></header>
-            <div class="hue-list">
-                <div class="hue-list-item hue-list-item__special">
-                    <div class="hue-list-content">酒店证照(选填)</div>
-                    <div class="hue-list-arrow">
-                        <span class="hue-arrow hue-arrow-right"></span>
-                    </div>
-                </div>
-                <div class="hue-list-item">
-                    <div v-if="!image">
-                        <form id="uploadForm" enctype="multipart/form-data">
-                            <input type="file" @change="onFileChange">
-                        </form>
-                    </div>
-                     <div v-else>
-                        <img :src="image" />
-                        <button @click="removeImage">Remove image</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <header><h4 class="header">酒店联系人</h4></header>
-            <div class="hue-list">
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">酒店联系人</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写身份证上的姓名">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">联系人手机</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写联系人手机号码">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hue-list-item">
-                    <div class="hue-list-content">
-                        <div class="hue-flex">
-                            <div class="hue-flex-item hue-fc-3">联系人邮箱</div>
-                            <div class="hue-flex-item" flex="3">
-                                <input type="text" name="hue-demo" placeholder="请填写联系人邮箱">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="hue-block hue-flex">
-                <button class="hue-flex-item hue-btn hue-btn-primary mr-20" flex="1" type="button">提交</button>
-            </div>
-        </section>
+            </section>
+        </form>
     </div>
-    <script src="http://awp-assets.meituan.net/hfe/hfe-assets/vue/1.0.26/vue.js"></script>
+    <script src="http://awp-assets.meituan.net/hfe/hfe-assets/vue/1.0.26/vue.min.js"></script>
+    <script src="http://awp-assets.meituan.net/hfe/hfe-assets/vue-resource/0.9.3/vue-resource.min.js"></script>
+    <script src="./vue-form.js"></script>
     <script src="./index.js"></script>
-
 </body>
 </html>
