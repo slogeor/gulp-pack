@@ -73,7 +73,6 @@
                     </div>
                     <div class="hue-list-item  hue-list-item__special">
                         <div class="hue-list-content">所在地区</div>
-                        <div class="hue-list-arrow"><span class="hue-arrow hue-arrow-right"></span></div>
                     </div>
                     <div class="hue-list-item">
                         <div class="hue-list-content">
@@ -156,7 +155,7 @@
             <section>
                 <header><h4 class="header">证照信息</h4></header>
                 <div class="hue-list">
-                    <div class="hue-list-item">
+                    <div class="hue-list-item hue-list-item__special">
                         <div class="hue-list-content">酒店证照(选填)</div>
                         <div class="hue-list-arrow">
                             <span class="hue-arrow hue-arrow-right"></span>
@@ -166,7 +165,9 @@
                     <div class="hue-list-item">
                         <div class="hue-list-content">
                         <div v-if="!image">
-                            <input type="file" @change="onFileChange" class="hue-file">
+                            <button type="button" class="hue-btn__special" v-on:click="uploadFile">图片上传</button>
+
+                            <input type="file" id="hue-file" @change="onFileChange" class="hue-file hide">
                         </div>
                          <div v-else>
                             <img :src="image" />

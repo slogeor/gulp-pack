@@ -2,7 +2,29 @@ var apiHost = /meituan.com/.test(location.href) ? 'http://jiudian.meituan.com' :
 var urlList = {
     province: '/api/v1/fe/cityselect/provinces',
     subarea: '/api/v1/fe/cityselect/subarea',
-    bizself:'/api/v1/mta/sc/bizself'
+    bizself: '/api/v1/mta/sc/bizself'
+};
+
+var eventUtil = {
+    addHandler: function (element, type, handler) { //添加事件
+        if (element.addEventListener) {
+            element.addEventListener(type, handler, false); //使用DOM2级方法添加事件
+        } else if (element.attachEvent) { //使用IE方法添加事件
+            element.attachEvent("on" + type, handler);
+        } else {
+            element["on" + type] = handler; //使用DOM0级方法添加事件
+        }
+    },
+
+    removeHandler: function (element, type, handler) { //取消事件
+        if (element.removeEventListener) {
+            element.removeEventListener(type, handler, false);
+        } else if (element.detachEvent) {
+            element.detachEvent("on" + type, handler);
+        } else {
+            element["on" + type] = null;
+        }
+    }
 };
 
 var vue = new Vue({
@@ -126,7 +148,7 @@ var vue = new Vue({
             var bizselfUrl = apiHost + urlList.bizself;
 
             Vue.http.post(bizselfUrl, param, null).then(function (response) {
-               var result = response.json();
+                var result = response.json();
                 if (result.status === 0) {
                     console.log(result);
                 } else {
@@ -135,6 +157,10 @@ var vue = new Vue({
             }, function (err) {
                 alert(err.message || '服务器错误');
             });
+        },
+
+        uploadFile: function (argument) {
+
         },
 
         onFileChange: function (e) {
