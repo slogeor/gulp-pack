@@ -91,6 +91,7 @@
     border: 0.01rem #ccc dashed; }
 
 .container .hue-form .hue-file-btn {
+  font-size: .3rem;
   padding: .05rem .25rem; }
 
 .container .success {
