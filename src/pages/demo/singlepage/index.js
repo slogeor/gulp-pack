@@ -2,36 +2,15 @@ var apiHost = /meituan.com/.test(location.href) ? 'http://jiudian.meituan.com' :
 var urlList = {
     province: '/api/v1/fe/cityselect/provinces',
     subarea: '/api/v1/fe/cityselect/subarea',
-    bizself: '/api/v1/mta/sc/bizself'
+    bizself: '/api/v1/mta/sc/bizself',
+    upload: '/api/v1/mta/sc/bizself/certificate/upload'
 };
-
-var eventUtil = {
-    addHandler: function (element, type, handler) { //添加事件
-        if (element.addEventListener) {
-            element.addEventListener(type, handler, false); //使用DOM2级方法添加事件
-        } else if (element.attachEvent) { //使用IE方法添加事件
-            element.attachEvent("on" + type, handler);
-        } else {
-            element["on" + type] = handler; //使用DOM0级方法添加事件
-        }
-    },
-
-    removeHandler: function (element, type, handler) { //取消事件
-        if (element.removeEventListener) {
-            element.removeEventListener(type, handler, false);
-        } else if (element.detachEvent) {
-            element.detachEvent("on" + type, handler);
-        } else {
-            element["on" + type] = null;
-        }
-    }
-};
-
 var vue = new Vue({
-    el: '#app',
+    el: '#container',
     data: {
         // 配置数据
         config: {
+            submitForm: false,
             submit: false,
             provinceList: [],
             cityList: [],
@@ -52,9 +31,7 @@ var vue = new Vue({
             introduction: ''
         },
         // 证照信息
-        certificateInfo: {
-            fileUrl: ''
-        },
+        certificateInfo: [],
         // 酒店联系人
         contactInfo: {
             name: '',
@@ -109,7 +86,6 @@ var vue = new Vue({
 
         // 地区改动
         changeRegion: function (type) {
-            console.log(JSON.stringify(this.basicInfo));
             var vm = this;
             if (type === 'province') {
                 vm.getSubarea(vm.basicInfo.provinceId, 'city');
@@ -124,6 +100,7 @@ var vue = new Vue({
             if (!this.myform.$valid) return;
             var basicInfo = JSON.parse(JSON.stringify(this.basicInfo));
             var contactInfo = JSON.parse(JSON.stringify(this.contactInfo));
+            var certificateInfo = JSON.parse(JSON.stringify(this.certificateInfo));
 
             if (basicInfo.provinceId === -1) {
                 alert('请选择省份');
@@ -142,15 +119,22 @@ var vue = new Vue({
 
             var param = {
                 basicInfo: basicInfo,
-                contactInfo: contactInfo
+                contactInfo: contactInfo,
+                certificateInfo: certificateInfo
+
             };
 
             var bizselfUrl = apiHost + urlList.bizself;
-
+            var vm = this;
             Vue.http.post(bizselfUrl, param, null).then(function (response) {
                 var result = response.json();
                 if (result.status === 0) {
-                    console.log(result);
+                    alert('保存成功');
+                    window.scroll(0, 0);
+                    var clientHeight = window.screen.height;
+                    document.getElementById('container').style.minHeight = clientHeight + 'px';
+
+                    vm.config.submitForm = true;
                 } else {
                     alert('接口请求失败');
                 }
@@ -159,43 +143,38 @@ var vue = new Vue({
             });
         },
 
-        uploadFile: function (argument) {
-
-        },
-
+        // 文件上传
         onFileChange: function (e) {
             var files = e.target.files || e.dataTransfer.files;
-
             if (!files.length) return;
-
             var file = files[0];
-            var url = 'http://hotel.hoteldev.sankuai.com/api/v1/mta/sc/bizself/certificate/upload';
-
+            var fileUrl = apiHost + urlList.upload;
             var formData = new FormData();
-            formData.append('file', file);
-
             var options = {
                 cache: false,
                 processData: false,
                 contentType: false
             };
+            var vm = this;
+            formData.append('file', file);
 
             // 只选择图片文件
             if (!file.type.match('image.*')) return;
-            var vm = this;
-            Vue.http.post(url, formData, options).then(function (response) {
-                var body = response.body;
-                if (body.status === 0) {
-                    vm.image = body.data.fileUrl;
+            Vue.http.post(fileUrl, formData, options).then(function (response) {
+                var result = response.json();
+                if (result.status === 0) {
+                   vm.certificateInfo.push(result.data);
                 } else {
-
+                    alert('上传失败');
                 }
-            }, function () {
-
+            }, function (err) {
+                alert(err.message || '服务器错误');
             });
+            document.getElementById('hue-file').value = "";
         },
-        removeImage: function (e) {
-            this.image = '';
+        // 移除图片
+        removeImage: function (index) {
+            this.certificateInfo.splice(index, 1);
         }
     }
 });

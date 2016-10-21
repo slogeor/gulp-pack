@@ -8,7 +8,7 @@
     display: inline-block;
     vertical-align: middle;
     font: normal normal normal 14px/1 "hueui";
-    font-size: inherit;
+    font-size: .4rem;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
 
@@ -22,67 +22,120 @@
     display: none;
 }
 .hueui-icon-warn {
-    font-size: .4rem;
+
     color: #F43530;
 
     &:before {
         content: "\EA0B";
     }
 }
-
+.hueui-icon-success {
+    &:before {
+        content: "\EA06";
+    }
+}
 .hueui-icon-checked {
     &:before {
         content: '\EA06';
         color: #09BB07;
     }
 }
-.container {
-    .hue-navbar-special {
-        background-color: #56b8af;
+.hueui-icon-cancel {
+    &:before {
+        color: #09BB07;
+        content: "\EA0D";
     }
+}
+.container {
     .header {
         padding: .2rem .2rem .2rem .4rem;
         font-size: .3rem;
     }
-    .hue-list-item__special {
-        border-bottom: none;
-    }
-    .hue-flex-item {
-        position:relative;
-        input {
-            width: 90%;
+    .hue-navbar__special {
+        background-color: #56b8af;
+
+        .hue-navbar-wrap {
+            color: #fff;
         }
-        .hue-item-warn {
+        .hue-arrow {
+            &:after {
+                border-left-color: #394e4c;
+                border-bottom-color: #394e4c;
+            }
+        }
+    }
+    .hue-form {
+        .hue-list-item__special {
+            border-bottom: none;
+        }
+        .hue-flex-item {
+            position: relative;
+
+            input {
+                width: 90%;
+            }
+            .hue-item-warn {
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+        .hue-file {
+            height: 0.5rem;
+            padding-top: .25rem;
+            box-sizing: content-box;
+        }
+        .hue-select {
+            width: 95%;
+            border: 0.01rem solid #aaa;
+            text-indent: .1rem;
+            padding: 0.1rem 0;
+        }
+        .hue-arrow-down__special {
             position: absolute;
-            right: 0;
-            top: 0;
+            right: 10%;
+            top: .25rem;
+        }
+        .hue-file-list {
+            text-align: center;
+            margin-top: .25rem;
+            li {
+                width: 50%;
+                float: left;
+                margin-bottom: .25rem;
+            }
+            .hueui-icon-cancel__special {
+                display: block;
+                text-align: center;
+                padding-top: .125rem;
+            }
+            .hue-image {
+                width: 3.5rem;
+                height: 3.5rem;
+                border: 0.01rem #ccc dashed;
+            }
         }
     }
-    .hue-file {
-        height: 0.5rem;
-        padding-top: .2rem;
-        box-sizing: content-box;
-    }
-    .hue-select {
-        width: 95%;
-        border: 0.01rem solid #aaa;
-        text-indent: .1rem;
-        padding: 0.1rem 0;
-    }
-    .hue-arrow-down__special {
-        position: absolute;
-        right: 10%;
-        top: .25rem;
-    }
-    .hue-btn__special {
-        width: 25%;
-        height: .6rem;
-        padding: 0;
-        line-height: .61rem;
-        text-align: center;
-        border: 1px solid #d2d2d2;
-        color: #999;
-        white-space: nowrap;
-        background: #fdfdfd;
+    .success {
+        padding-top: 30%;
+
+        .hue-block {
+            color: #333;
+            border: none 0;
+            background-color: #f4f4f4;
+        }
+        .hue-block-icon {
+            font-size: .3rem;
+            color: #09BB07;
+            display: block;
+            text-align: center;
+        }
+        .hueui-icon__msg {
+            font-size: .3rem;
+        }
+        .hue-ellipsis-block {
+            display: block;
+            line-height: 1.5;
+        }
     }
 }

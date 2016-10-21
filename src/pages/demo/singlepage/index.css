@@ -8,7 +8,7 @@
   display: inline-block;
   vertical-align: middle;
   font: normal normal normal 14px/1 "hueui";
-  font-size: inherit;
+  font-size: .4rem;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased; }
   [class^="hueui-icon-"]:before, [class*=" hueui-icon-"]:before {
@@ -20,57 +20,90 @@
   display: none; }
 
 .hueui-icon-warn {
-  font-size: .4rem;
   color: #F43530; }
   .hueui-icon-warn:before {
     content: "\EA0B"; }
+
+.hueui-icon-success:before {
+  content: "\EA06"; }
 
 .hueui-icon-checked:before {
   content: '\EA06';
   color: #09BB07; }
 
-.container .hue-navbar-special {
-  background-color: #56b8af; }
+.hueui-icon-cancel:before {
+  color: #09BB07;
+  content: "\EA0D"; }
 
 .container .header {
   padding: .2rem .2rem .2rem .4rem;
   font-size: .3rem; }
 
-.container .hue-list-item__special {
+.container .hue-navbar__special {
+  background-color: #56b8af; }
+  .container .hue-navbar__special .hue-navbar-wrap {
+    color: #fff; }
+  .container .hue-navbar__special .hue-arrow:after {
+    border-left-color: #394e4c;
+    border-bottom-color: #394e4c; }
+
+.container .hue-form .hue-list-item__special {
   border-bottom: none; }
 
-.container .hue-flex-item {
+.container .hue-form .hue-flex-item {
   position: relative; }
-  .container .hue-flex-item input {
+  .container .hue-form .hue-flex-item input {
     width: 90%; }
-  .container .hue-flex-item .hue-item-warn {
+  .container .hue-form .hue-flex-item .hue-item-warn {
     position: absolute;
     right: 0;
     top: 0; }
 
-.container .hue-file {
+.container .hue-form .hue-file {
   height: 0.5rem;
-  padding-top: .2rem;
+  padding-top: .25rem;
   box-sizing: content-box; }
 
-.container .hue-select {
+.container .hue-form .hue-select {
   width: 95%;
   border: 0.01rem solid #aaa;
   text-indent: .1rem;
   padding: 0.1rem 0; }
 
-.container .hue-arrow-down__special {
+.container .hue-form .hue-arrow-down__special {
   position: absolute;
   right: 10%;
   top: .25rem; }
 
-.container .hue-btn__special {
-  width: 25%;
-  height: .6rem;
-  padding: 0;
-  line-height: .61rem;
+.container .hue-form .hue-file-list {
   text-align: center;
-  border: 1px solid #d2d2d2;
-  color: #999;
-  white-space: nowrap;
-  background: #fdfdfd; }
+  margin-top: .25rem; }
+  .container .hue-form .hue-file-list li {
+    width: 50%;
+    float: left;
+    margin-bottom: .25rem; }
+  .container .hue-form .hue-file-list .hueui-icon-cancel__special {
+    display: block;
+    text-align: center;
+    padding-top: .125rem; }
+  .container .hue-form .hue-file-list .hue-image {
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 0.01rem #ccc dashed; }
+
+.container .success {
+  padding-top: 30%; }
+  .container .success .hue-block {
+    color: #333;
+    border: none 0;
+    background-color: #f4f4f4; }
+  .container .success .hue-block-icon {
+    font-size: .3rem;
+    color: #09BB07;
+    display: block;
+    text-align: center; }
+  .container .success .hueui-icon__msg {
+    font-size: .3rem; }
+  .container .success .hue-ellipsis-block {
+    display: block;
+    line-height: 1.5; }
