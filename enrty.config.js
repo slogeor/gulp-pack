@@ -1,5 +1,6 @@
 module.exports = [
     './src/mods/scripts',
     './src/pages/home',
-    'src/pages/demo/vue/upload'
+    'src/pages/demo/test',
+    'src/pages/demo/singlepage'
 ];

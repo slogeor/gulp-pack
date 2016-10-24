@@ -4,5 +4,6 @@
   "mods/styles/css/lib/reset.css": "mods/styles/css/lib/reset-92d8ea6a47.css",
   "pages/components/index.css": "pages/components/index-265c9f44e3.css",
   "pages/components/loading/index.css": "pages/components/loading/index-bb89c3cd2c.css",
+  "pages/demo/singlepage/index.css": "pages/demo/singlepage/index-d238bbd59b.css",
   "pages/home/index.css": "pages/home/index-7991ddec56.css"
 }
