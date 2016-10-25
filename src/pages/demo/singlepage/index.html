@@ -134,10 +134,8 @@
                         <div class="hue-list-item">
                             <div class="hue-list-content">
                                 <div>
-                                    <!-- <button type="button" class="hue-btn__special" v-on:click="uploadFile">图片上传</button> -->
-
                                     <input type="file" id="hue-file" @change="onFileChange" class="hue-file hide">
-                                    <a class="hue-btn hue-btn-primary hue-file-btn" href="javascript:void(0)" @click="selectFile">选择文件</a>
+                                    <a class="hue-btn hue-btn-primary hue-file-btn" href="javascript:void(0)" @click="selectFile" :disabled="config.disabled" v-bind:class="{ 'hue-btn-primary-disabled': config.disabled}">选择文件</a>
                                 </div>
 
                                  <ul class="hue-file-list hue-clearfix">
@@ -145,7 +143,11 @@
                                         <img :src="item.fileUrl" class="hue-image"/>
                                         <i class="hueui-icon-cancel hueui-icon-cancel__special" @click="removeImage($index)"></i>
                                     </li>
+                                    <li class="hueui-loadmore">
+                                        <i class="hueui-loading" v-show="config.disabled"></i>
+                                    </li>
                                 </ul>
+
                             </div>
                         </div>
                     </div>
@@ -190,7 +192,7 @@
                 </section>
                 <section>
                     <div class="hue-block hue-flex">
-                        <button class="hue-flex-item hue-btn hue-btn-primary mr-20" flex="1" type="button" v-on:click="submitForm">提交</button>
+                        <button class="hue-flex-item hue-btn hue-btn-primary mr-20" flex="1" type="button" v-on:click="submitForm" :disabled="config.disabled" v-bind:class="{ 'hue-btn-primary-disabled': config.disabled}">提交</button>
                     </div>
                 </section>
             </form>
