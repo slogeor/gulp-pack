@@ -20,5 +20,5 @@ gulp.task('default', function(callback) {
 });
 
 gulp.task('build', function(callback) {
-    runSequence('mincss', 'minjs', 'minhtml', callback);
+    runSequence('clean', 'mincss', 'minjs', 'minhtml', callback);
 });
