@@ -143,8 +143,8 @@
                                         <img :src="item.fileUrl" class="hue-image"/>
                                         <i class="hueui-icon-cancel hueui-icon-cancel__special" @click="removeImage($index)"></i>
                                     </li>
-                                    <li class="hueui-loadmore">
-                                        <i class="hueui-loading" v-show="config.disabled"></i>
+                                    <li class="hueui-loadmore" v-show="config.disabled">
+                                        <i class="hueui-loading"></i>
                                     </li>
                                 </ul>
 
