@@ -107,17 +107,17 @@
                 var contactInfo = JSON.parse(JSON.stringify(this.contactInfo));
                 var certificateInfo = JSON.parse(JSON.stringify(this.certificateInfo));
 
-                if (basicInfo.provinceId === -1) {
+                if (Number(basicInfo.provinceId) === -1) {
                     alert('请选择省份');
                     return;
                 }
 
-                if (basicInfo.cityId === -1) {
+                if (Number(basicInfo.cityId) === -1) {
                     alert('请选择城市');
                     return;
                 }
 
-                if (basicInfo.locationId === -1) {
+                if (Number(basicInfo.locationId) === -1) {
                     alert('请选择区域');
                     return;
                 }
