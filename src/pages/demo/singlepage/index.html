@@ -141,7 +141,7 @@
                                  <ul class="hue-file-list hue-clearfix">
                                     <li v-for="item in certificateInfo">
                                         <img :src="item.fileUrl" class="hue-image"/>
-                                        <i class="hueui-icon-cancel hueui-icon-cancel__special" @click="removeImage($index)"></i>
+                                        <i class="hueui-icon-cancel hueui-icon-cancel__special" @click="removeImage(item)"></i>
                                     </li>
                                     <li class="hueui-loadmore" v-show="config.disabled">
                                         <i class="hueui-loading"></i>

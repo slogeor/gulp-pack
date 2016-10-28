@@ -1,0 +1,13 @@
+<!DOCTYPEhtml>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>代理文件</title>
+    </head>
+    <body>
+        <script type="text/javascript">
+        var rs = window.location.search.split('?').slice(1);
+        window.parent.callback(rs.toString().split('=').slice(1));
+        </script>
+    </body>
+</html>

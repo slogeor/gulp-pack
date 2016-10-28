@@ -192,8 +192,8 @@
                 document.getElementById('hue-file').click();
             },
             // 移除图片
-            removeImage: function (index) {
-                this.certificateInfo.splice(index, 1);
+            removeImage: function (item) {
+                this.certificateInfo.$remove(item);
             }
         }
     });
