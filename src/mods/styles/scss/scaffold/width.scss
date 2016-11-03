@@ -1,0 +1,8 @@
+@charset "utf-8";
+
+/// 从30px到300px，步长为10px
+@for $width from 3 through 30 {
+    .w#{$width * 10} {
+        width: $width * 10px;
+    }
+}

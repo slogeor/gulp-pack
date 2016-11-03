@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+// padding margin 单个值从5px到30px，步长为5
+$simpleMap: (
+  pdl: "padding-left",
+  pdr: "padding-right",
+  pdt: "padding-top",
+  pdb: "padding-bottom",
+  mrl: "margin-left",
+  mrr: "margin-right",
+  mrt: "margin-top",
+  mrb: "margin-bottom"
+);
+
+@for $i from 1 through 6 {
+    @each $key, $value in $simpleMap  {
+        .#{$key}#{$i * 5} {
+            #{$value}: $i * 5px;
+        }
+    }
+}
+
+// padding margin 从5px到30px，步长为5
+$fourMap: (
+  pd: "padding",
+  mr: "margin",
+);
+
+@for $i from 1 through 6 {
+    @each $key, $value in $fourMap  {
+        .#{$key}#{$i * 5} {
+            #{$value}: $i * 5px;
+        }
+    }
+}
+
+// padding margin 双值从5px到30px，步长为5
+$doubleMap: (
+  pd: "padding",
+  mr: "margin",
+);
+
+@for $i from 1 through 6 {
+  @each $key, $value in $doubleMap  {
+      .#{$key}lr#{$i * 5} {
+          #{$value}-left: $i * 5px;
+          #{$value}-right: $i * 5px;
+      }
+  }
+}
+
+@for $i from 1 through 6 {
+  @each $key, $value in $doubleMap  {
+      .#{$key}tb#{$i * 5} {
+          #{$value}-top: $i * 5px;
+          #{$value}-bottom: $i * 5px;
+      }
+  }
+}
+
+
