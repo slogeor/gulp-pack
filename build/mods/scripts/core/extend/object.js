@@ -1,0 +1,1 @@
+Object.defineProperty(Object,"is",{value:function(e,r){return e===r?0!==e||1/e===1/r:e!==e&&r!==r},configurable:!0,enumerable:!1,writable:!0});

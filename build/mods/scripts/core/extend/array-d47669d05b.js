@@ -1,0 +1,1 @@
+var extendArray={toArray:function(){return Array.from?Array.from:function(r){return[].slice.call(r)}},ArrayOf:function(){return[].slice.call(arguments)},contains:function(){return Array.prototype.includes?function(r,n){return r.includes(n)}:function(r,n){return r.some(function(r){return r===n})}}};

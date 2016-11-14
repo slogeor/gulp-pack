@@ -1,0 +1,1 @@
+Math.trunc=Math.trunc||function(t){return t<0?Math.ceil(t):Math.floor(t)},Math.sign=Math.sign||function(t){return t=+t,0===t||isNaN(t)?t:t>0?1:-1},Math.cbrt=Math.cbrt||function(t){var a=Math.pow(Math.abs(t),1/3);return t<0?-a:a};

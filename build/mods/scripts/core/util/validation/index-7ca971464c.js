@@ -1,0 +1,1 @@
+var valid={verifyMultiIds:function(a){var e=a.replace(/[\r\n\s]/gm,","),i=e.replace(/(\d+,+)/g,"");return!!/^(\d+[,]?)+$/g.test(i)&&e.replace(/,+/g,",")}};window.GLOBAL.util.validation=valid;
