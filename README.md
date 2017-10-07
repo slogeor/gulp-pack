@@ -1,4 +1,4 @@
-## fepack
+## gulp-pack
 
 ### 实现的功能
 
